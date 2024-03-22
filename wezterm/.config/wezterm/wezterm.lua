@@ -18,8 +18,8 @@ config.font = wezterm.font('Monoid', {})
 config.font_size = 16.0
 config.audible_bell = "Disabled"
 
-config.default_prog = { 'nu' }
--- config.default_prog = { 'bash' }
+-- config.default_prog = { 'nu' }
+config.default_prog = { '/run/current-system/sw/bin/bash' }
 
 config.leader = {
   key = 'a',
