@@ -1,0 +1,12 @@
+[user]
+	email = nate.givens03@gmail.com
+	name = Nathan Givens
+
+[delta]
+	# side-by-side = true
+[core]
+	pager = delta --line-numbers --dark
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main
