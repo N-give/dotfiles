@@ -178,6 +178,7 @@
       git
       gitAndTools.delta
       google-chrome
+      heroic
       imagemagick
       kdenlive
       kind
