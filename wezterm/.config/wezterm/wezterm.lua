@@ -16,6 +16,7 @@ config.window_padding = {
 
 config.font = wezterm.font('Monoid', {})
 config.font_size = 16.0
+config.front_end = 'WebGpu'
 config.audible_bell = "Disabled"
 
 -- config.default_prog = { 'nu' }
