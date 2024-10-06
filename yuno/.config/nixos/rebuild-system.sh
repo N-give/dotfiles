@@ -1,2 +1,2 @@
 #! /usr/bin/env bash
-sudo nixos-rebuild switch --impure --flake .#
+sudo nixos-rebuild switch --flake .#yuno
