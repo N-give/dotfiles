@@ -1,0 +1,14 @@
+add_newline = false
+
+[battery]
+disabled = true
+
+[line_break]
+disabled = false
+
+[directory]
+truncation_length = 1
+truncate_to_repo = true
+
+[nix_shell]
+disabled = true
