@@ -56,6 +56,22 @@ require('lazy').setup({
   },
 
   {
+    "ray-x/go.nvim",
+    dependencies = {  -- optional packages
+      "ray-x/guihua.lua",
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("go").setup()
+    end,
+    event = {"CmdlineEnter"},
+    ft = {"go", 'gomod'},
+    build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+  },
+
+
+  {
     'lewis6991/gitsigns.nvim',
     opts = {
       -- See `:help gitsigns.txt`
@@ -74,15 +90,6 @@ require('lazy').setup({
     main = "ibl",
     opts = {}
   },
-  --[[
-  {
-    'lukas-reineke/indent-blankline.nvim',
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = false,
-    },
-  },
-  --]]
 
   { "catppuccin/nvim", name = "catppuccin" },
 
@@ -101,6 +108,14 @@ require('lazy').setup({
         -- Configuration here, or leave empty to use defaults
       })
     end
+  },
+
+  {
+    'briangwaltney/paren-hint.nvim',
+    lazy = false,
+    config = function()
+      require('paren-hint').setup()
+    end,
   },
 
   {
@@ -210,6 +225,7 @@ require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
   ensure_installed = {
     'c',
+    'go',
     'elm',
     'haskell',
     'help',
@@ -346,6 +362,7 @@ local servers = {
   clangd = {},
   -- gopls = {},
   pyright = {},
+  rnix = {},
   -- rust_analyzer = {
   --   imports = {
   --     granularity = {
@@ -365,7 +382,6 @@ local servers = {
   --     enable = false
   --   },
   -- },
-  rnix = {},
   tsserver = {},
   denols = {},
   --[[
@@ -456,6 +472,10 @@ require('lspconfig').elmls.setup {
   init_options = {
     elmAnalyseTrigger = "change"
   },
+}
+
+require('lspconfig').gopls.setup {
+  on_attach = on_attach,
 }
 
 require('lspconfig').rust_analyzer.setup {
