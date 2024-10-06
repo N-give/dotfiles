@@ -228,7 +228,6 @@ require('nvim-treesitter.configs').setup {
     'go',
     'elm',
     'haskell',
-    'help',
     'javascript',
     'lua',
     'python',
