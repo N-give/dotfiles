@@ -74,7 +74,6 @@
   services.xserver.enable = true;
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  environment.sessionVariables.WAYLAND_DISPLAY = "1";
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
