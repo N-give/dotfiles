@@ -19,8 +19,8 @@ config.font_size = 16.0
 config.front_end = 'WebGpu'
 config.audible_bell = "Disabled"
 
--- config.default_prog = { 'nu' }
-config.default_prog = { '/run/current-system/sw/bin/bash' }
+config.default_prog = { 'nu' }
+-- config.default_prog = { '/run/current-system/sw/bin/bash' }
 
 config.leader = {
   key = 'a',
