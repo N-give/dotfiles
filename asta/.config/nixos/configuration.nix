@@ -171,6 +171,7 @@
       feh
       ffmpeg
       firefox
+      freecad
       fzf
       gcc
       gimp
