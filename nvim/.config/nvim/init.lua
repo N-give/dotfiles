@@ -498,6 +498,10 @@ require('lspconfig').rust_analyzer.setup {
   },
 }
 
+require('lspconfig').denols.setup({
+  on_attach = on_attach,
+})
+
 mason_lspconfig.setup_handlers({
   function(server_name)
     require('lspconfig')[server_name].setup {
