@@ -79,10 +79,9 @@ $env.NU_PLUGIN_DIRS = [
 ]
 
 # To add entries to PATH (on Windows you might use Path), you can use the following pattern:
-$env.PATH = ($env.PATH | split row (char esep) | prepend '/run/wrappers/bin')
 $env.PATH = ($env.PATH | split row (char esep) | prepend '/home/nate/.nix-profile/bin')
 $env.PATH = ($env.PATH | split row (char esep) | prepend '/etc/profiles/per-user/nate/bin')
 $env.PATH = ($env.PATH | split row (char esep) | prepend '/nix/var/nix/profiles/default/bin')
 $env.PATH = ($env.PATH | split row (char esep) | prepend '/run/current-system/sw/bin')
 $env.PATH = ($env.PATH | split row (char esep) | prepend '/home/nate/.local/bin')
-$env.PATH = ($env.PATH | split row (char esep) | prepend '/home/nate/.local/bin')
+$env.PATH = ($env.PATH | split row (char esep) | prepend '/run/wrappers/bin')
