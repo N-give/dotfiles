@@ -47,6 +47,14 @@ require('lazy').setup({
   { 'folke/which-key.nvim', opts = {} },
 
   {
+    'stevearc/oil.nvim',
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {},
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+  },
+
+  {
     'mrcjkb/haskell-tools.nvim',
     requires = {
       'nvim-lua/plenary.nvim',
@@ -309,6 +317,9 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, {
 })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, {
   desc = "Open diagnostics list"
+})
+vim.keymap.set('n', '<leader>-', '<cmd>Oil<cr>', {
+  desc = 'Open parent directory',
 })
 
 -- LSP settings.
