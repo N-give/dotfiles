@@ -118,7 +118,10 @@
   };
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.brlaser ];
+  };
   services.avahi = {
     enable = true;
     nssmdns4 = true;
@@ -157,6 +160,7 @@
       android-file-transfer
       audacity
       autorandr
+      bambu-studio
       bat
       bottom
       cachix
@@ -183,6 +187,7 @@
       kdenlive
       kind
       krita
+      lua-language-server
       libreoffice
       lsof
       lxappearance
@@ -257,6 +262,7 @@
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     monoid
+    cups-browsed
     # (steam.override { withJava = true; })
   ];
 
