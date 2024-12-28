@@ -73,11 +73,19 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+  environment.sessionVariables = {
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_DATA_HOME = "$HOME/var/lib";
+    XDG_CACHE_HOME = "$HOME/var/cache";
+    NIXOS_OZONE_WL = "1";
+  };
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
+
+  # Enable hyprland window manager
+  programs.hyprland.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -137,8 +145,9 @@
 
   fonts = {
     packages = with pkgs; [
-      # nerdfonts
+      nerdfonts
       powerline-fonts
+      monoid
     ];
 
     fontconfig = {
@@ -162,6 +171,7 @@
       bat
       bluez
       bottom
+      brightnessctl
       cachix
       certbot
       direnv
@@ -183,6 +193,9 @@
       glxinfo
       graphviz
       hicolor-icon-theme
+      hypridle
+      hyprlock
+      hyprpaper
       imagemagick
       kdenlive
       kind
@@ -213,6 +226,7 @@
       unzip
       vlc
       wally-cli
+      waybar
       wezterm
       write_stylus
       xorg.xwininfo
@@ -235,11 +249,13 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    git
     firefox
+    git
+    kitty
     lshw
     neovim
     monoid
+    wofi
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
