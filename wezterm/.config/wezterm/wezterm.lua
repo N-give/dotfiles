@@ -5,6 +5,8 @@ if wezterm.builder then
   config = wezterm.config_builder()
 end
 
+config.enable_wayland = false
+
 config.color_scheme = 'Catppuccin Mocha'
 
 config.window_padding = {
@@ -14,7 +16,10 @@ config.window_padding = {
   bottom = 0,
 }
 
-config.font = wezterm.font('Monoid', {})
+config.font = wezterm.font_with_fallback {
+  'Monoid',
+  'Fira Code',
+}
 config.font_size = 16.0
 config.front_end = 'WebGpu'
 config.audible_bell = "Disabled"
