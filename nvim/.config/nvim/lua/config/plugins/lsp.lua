@@ -70,6 +70,7 @@ return {
       require('lspconfig').elmls.setup { capabilities = capabilities, }
       require('lspconfig').gopls.setup { capabilities = capabilities, }
       require('lspconfig').denols.setup { capabilities = capabilities, }
+      require('lspconfig').zls.setup { capabilities = capabilities, }
       require('lspconfig').hls.setup {
         capabilities = capabilities,
         filetypes = {
