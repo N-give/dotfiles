@@ -1,11 +1,12 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
     build = ":TSUpdate",
     config = function()
-      local configs = require("nvim-treesitter.configs")
-
-      configs.setup({
+      require("nvim-treesitter.configs").setup({
         ensure_installed = {
           'c',
           'go',
@@ -18,12 +19,13 @@ return {
           'rust',
           'tsx',
           'typescript',
-          'vim'
+          'vim',
+          'zig',
         },
         sync_install = false,
         highlight = {
           enable = true,
-          disable = function(lang, buf)
+          disable = function(_lang, buf)
             local max_filesize = 100 * 1024
             local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
             if ok and stats and stats.size > max_filesize then
@@ -48,45 +50,111 @@ return {
             lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
             keymaps = {
               -- You can use the capture groups defined in textobjects.scm
-              ['aa'] = '@parameter.outer',
-              ['ia'] = '@parameter.inner',
               ['af'] = '@function.outer',
               ['if'] = '@function.inner',
-              ['ac'] = '@class.outer',
-              ['ic'] = '@class.inner',
+              ['aa'] = '@attribute.outer',
+              ['ia'] = '@attribute.inner',
+              ['ab'] = '@block.outer',
+              ['ib'] = '@block.inner',
+              ['ad'] = '@conditional.outer',
+              ['id'] = '@conditional.inner',
+              ['al'] = '@loop.outer',
+              ['il'] = '@loop.inner',
+              ['ap'] = '@parameter.outer',
+              ['ip'] = '@parameter.inner',
+              ['ar'] = '@regex.outer',
+              ['ir'] = '@regex.inner',
+              ['ax'] = '@class.outer',
+              ['ix'] = '@class.inner',
+              ['as'] = '@statement.outer',
+              ['is'] = '@statement.inner',
+              ['an'] = '@number.outer',
+              ['in'] = '@number.inner',
+              ['ac'] = '@comment.outer',
+              ['ic'] = '@comment.inner',
             },
           },
           move = {
             enable = true,
             set_jumps = true, -- whether to set jumps in the jumplist
             goto_next_start = {
-              [']m'] = '@function.outer',
-              [']]'] = '@class.outer',
+              [']f'] = { query = '@function.outer', desc = 'Next function start' },
+              [']b'] = { query = '@block.outer', desc = 'Next block start' },
+              [']d'] = { query = '@conditional.outer', desc = 'Next conditional start' },
+              [']l'] = { query = '@loop.outer', desc = 'Next loop start' },
+              [']p'] = { query = '@parameter.outer', desc = 'Next parameter start' },
+              [']r'] = { query = '@regex.outer', desc = 'Next regex start' },
+              [']x'] = { query = '@class.outer', desc = 'Next class start' },
+              [']s'] = { query = '@statement.outer', desc = 'Next statement start' },
+              [']n'] = { query = '@number.outer', desc = 'Next number start' },
+              [']c'] = { query = '@comment.outer', desc = 'Next comment start' },
             },
             goto_next_end = {
-              [']M'] = '@function.outer',
-              [']['] = '@class.outer',
+              [']F'] = { query = '@function.outer', desc = 'Next function end' },
+              [']B'] = { query = '@block.outer', desc = 'Next block end' },
+              [']D'] = { query = '@conditional.outer', desc = 'Next conditional end' },
+              [']L'] = { query = '@loop.outer', desc = 'Next loop end' },
+              [']P'] = { query = '@parameter.outer', desc = 'Next parameter end' },
+              [']R'] = { query = '@regex.outer', desc = 'Next regex end' },
+              [']X'] = { query = '@class.outer', desc = 'Next class end' },
+              [']S'] = { query = '@statement.outer', desc = 'Next statement end' },
+              [']N'] = { query = '@number.outer', desc = 'Next number end' },
+              [']C'] = { query = '@comment.outer', desc = 'Next comment end' },
             },
             goto_previous_start = {
-              ['[m'] = '@function.outer',
-              ['[['] = '@class.outer',
+              ['[f'] = { query = '@function.outer', desc = 'Previous function start' },
+              ['[b'] = { query = '@block.outer', desc = 'Previous block start' },
+              ['[d'] = { query = '@conditional.outer', desc = 'Previous conditional start' },
+              ['[l'] = { query = '@loop.outer', desc = 'Previous loop start' },
+              ['[p'] = { query = '@parameter.outer', desc = 'Previous parameter start' },
+              ['[r'] = { query = '@regex.outer', desc = 'Previous regex start' },
+              ['[x'] = { query = '@class.outer', desc = 'Previous class start' },
+              ['[s'] = { query = '@statement.outer', desc = 'Previous statement start' },
+              ['[n'] = { query = '@number.outer', desc = 'Previous number start' },
+              ['[c'] = { query = '@comment.outer', desc = 'Previous comment start' },
             },
             goto_previous_end = {
-              ['[M'] = '@function.outer',
-              ['[]'] = '@class.outer',
+              ['[F'] = { query = '@function.outer', desc = 'Previous function end' },
+              ['[B'] = { query = '@block.outer', desc = 'Previous block end' },
+              ['[D'] = { query = '@conditional.outer', desc = 'Previous conditional end' },
+              ['[L'] = { query = '@loop.outer', desc = 'Previous loop end' },
+              ['[P'] = { query = '@parameter.outer', desc = 'Previous parameter end' },
+              ['[R'] = { query = '@regex.outer', desc = 'Previous regex end' },
+              ['[X'] = { query = '@class.outer', desc = 'Previous class end' },
+              ['[S'] = { query = '@statement.outer', desc = 'Previous statement end' },
+              ['[N'] = { query = '@number.outer', desc = 'Previous number end' },
+              ['[C'] = { query = '@comment.outer', desc = 'Previous comment end' },
             },
           },
           swap = {
             enable = true,
             swap_next = {
-              ['<leader>a'] = '@parameter.inner',
+              ['>f'] = { query = '@function.outer', desc = 'Swap next function' },
+              ['>b'] = { query = '@block.outer', desc = 'Swap next block' },
+              ['>d'] = { query = '@conditional.outer', desc = 'Swap next conditional' },
+              ['>l'] = { query = '@loop.outer', desc = 'Swap next loop' },
+              ['>p'] = { query = '@parameter.inner', desc = 'Swap next parameter' },
+              ['>r'] = { query = '@regex.outer', desc = 'Swap next regex' },
+              ['>x'] = { query = '@class.outer', desc = 'Swap next statement' },
+              ['>s'] = { query = '@statement.outer', desc = 'Swap next statement' },
+              ['>n'] = { query = '@number.inner', desc = 'Swap next number' },
+              ['>c'] = { query = '@comment.outer', desc = 'Swap next comment' },
             },
             swap_previous = {
-              ['<leader>A'] = '@parameter.inner',
+              ['<f'] = { query = '@function.outer', desc = 'Swap previous function' },
+              ['<b'] = { query = '@block.outer', desc = 'Swap previous block' },
+              ['<d'] = { query = '@conditional.outer', desc = 'Swap previous conditional' },
+              ['<l'] = { query = '@loop.outer', desc = 'Swap previous loop' },
+              ['<p'] = { query = '@parameter.inner', desc = 'Swap previous parameter' },
+              ['<r'] = { query = '@regex.outer', desc = 'Swap previous regex' },
+              ['<x'] = { query = '@class.outer', desc = 'Swap previous statement' },
+              ['<s'] = { query = '@statement.outer', desc = 'Swap previous statement' },
+              ['<n'] = { query = '@number.inner', desc = 'Swap previous number' },
+              ['<c'] = { query = '@comment.outer', desc = 'Swap previous comment' },
             },
           },
         },
       })
     end,
-  }
+  },
 }
