@@ -40,13 +40,13 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- diagnostics
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, {
+vim.keymap.set('n', '<leader>ep', vim.diagnostic.goto_prev, {
   desc = "Go to previous diagnostic message"
 })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, {
+vim.keymap.set('n', '<leader>en', vim.diagnostic.goto_next, {
   desc = "Go to next diagnostic message"
 })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, {
+vim.keymap.set('n', '<leader>ee', vim.diagnostic.open_float, {
   desc = "Open floating diagnostic message"
 })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, {
@@ -63,6 +63,11 @@ vim.keymap.set('n', '<C-j>', '<cmd>cnext<cr>', { desc = 'Move to next Quickfix e
 vim.keymap.set('n', '<C-k>', '<cmd>cprev<cr>', { desc = 'Move to prev Quickfix entry', })
 vim.keymap.set('n', '<leader>co', '<cmd>copen<cr>', { desc = 'Open Quickfik list', })
 vim.keymap.set('n', '<leader>cc', '<cmd>cclose<cr>', { desc = 'Close Quickfik list', })
+
+vim.keymap.set('v', 'ma', function()
+  local macro = vim.fn.input("macro: ")
+  vim.api.nvim_feedkeys(":'<,'>norm! @" .. macro .. vim.api.nvim_replace_termcodes("<cr>", true, true, true), 't', false)
+end, { desc = 'Apply macro to selected lines' })
 
 -- require'lspconfig'.lua_ls.setup {
 --   on_attach = on_attach,
