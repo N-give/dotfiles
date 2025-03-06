@@ -189,7 +189,7 @@
       google-chrome
       heroic
       imagemagick
-      kdenlive
+      libsForQt5.kdenlive
       kind
       krita
       lua-language-server
@@ -245,10 +245,15 @@
   #   })
   # ];
 
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
+  programs = {
+    steam = {
+      enable = true;
+      remotePlay.openFirewall = true;
+      dedicatedServer.openFirewall = true;
+    };
+    nix-ld = {
+      dev.enable = true;
+    };
   };
   hardware.graphics.enable32Bit = true;
   # programs.java.enable = true;
