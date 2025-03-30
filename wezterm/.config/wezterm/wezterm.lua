@@ -5,7 +5,7 @@ if wezterm.builder then
   config = wezterm.config_builder()
 end
 
-config.enable_wayland = false
+config.enable_wayland = true
 
 config.color_scheme = 'Catppuccin Mocha'
 
@@ -36,8 +36,27 @@ config.leader = {
 local current_pane_domain = {
   domain = 'CurrentPaneDomain'
 }
-
 local act = wezterm.action
+local navigate_pane_with_zoom = function(direction)
+  return function(window, pane)
+    local was_zoom
+    for _i, p in ipairs(window:active_tab():panes_with_info()) do
+      if p.pane:pane_id() == pane:pane_id() then
+        was_zoom = p.is_zoomed
+      end
+    end
+    if was_zoom == nil then
+      was_zoom = false
+    end
+    window:perform_action(
+      act.Multiple {
+        act.ActivatePaneDirection(direction),
+        act.SetPaneZoomState(was_zoom),
+      },
+      pane
+    )
+  end
+end
 config.keys = {
   {
     -- Select split direction
@@ -149,22 +168,23 @@ config.keys = {
   {
     key = 'h',
     mods = 'LEADER',
-    action = act.ActivatePaneDirection 'Left',
+    action = wezterm.action_callback(navigate_pane_with_zoom('Left')),
   },
+
   {
     key = 'j',
     mods = 'LEADER',
-    action = act.ActivatePaneDirection 'Down',
+    action = wezterm.action_callback(navigate_pane_with_zoom('Down')),
   },
   {
     key = 'k',
     mods = 'LEADER',
-    action = act.ActivatePaneDirection 'Up',
+    action = wezterm.action_callback(navigate_pane_with_zoom('Up')),
   },
   {
     key = 'l',
     mods = 'LEADER',
-    action = act.ActivatePaneDirection 'Right',
+    action = wezterm.action_callback(navigate_pane_with_zoom('Right')),
   },
 
   {
@@ -186,6 +206,12 @@ config.keys = {
     key = 'l',
     mods = 'LEADER|SHIFT',
     action = act.AdjustPaneSize { 'Right', 5 },
+  },
+
+  {
+    key = 'z',
+    mods = 'LEADER',
+    action = act.TogglePaneZoomState,
   },
 }
 
