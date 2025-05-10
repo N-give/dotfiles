@@ -118,7 +118,7 @@ return {
           if client.supports_method('textDocument/signatureHelp') then
             nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Help')
           end
-          nmap('<leader>gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+          nmap('<leader>sr', require('telescope.builtin').lsp_references, '[S]earch [R]eferences')
           nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
           nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
         end
