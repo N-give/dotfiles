@@ -97,7 +97,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -145,7 +145,7 @@
 
   fonts = {
     packages = with pkgs; [
-      nerdfonts
+      # nerd-fonts
       powerline-fonts
       monoid
     ];
@@ -197,7 +197,7 @@
       hyprlock
       hyprpaper
       imagemagick
-      kdenlive
+      kdePackages.kdenlive
       kind
       lsof
       lxappearance
