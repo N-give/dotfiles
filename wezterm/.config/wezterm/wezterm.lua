@@ -41,7 +41,7 @@ local navigate_pane_with_zoom = function(direction)
   return function(window, pane)
     local was_zoom
     for _i, p in ipairs(window:active_tab():panes_with_info()) do
-      if p.pane:pane_id() == pane:pane_id() then
+      if p.is_active then
         was_zoom = p.is_zoomed
       end
     end
