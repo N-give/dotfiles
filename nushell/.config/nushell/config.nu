@@ -903,6 +903,18 @@ $env.config = {
     ]
 }
 
+def units [value: float, from_unit: string, to_unit: string] -> string {
+    let conversions = {
+        in: {
+            mm: {|v| $v * 25.4}
+        },
+        mm: {
+            in: {|v| $v / 25.4}
+        }
+    }
+    do ($conversions | get $from_unit | get $to_unit) $value
+}
+
 $env.STARSHIP_SHELL = "nu"
 
 def create_left_prompt [] {
