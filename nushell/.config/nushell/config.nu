@@ -902,7 +902,7 @@ $env.config = {
     ]
 }
 
-def units [value: float, from_unit: string, to_unit: string] -> string {
+def units [value: float, from_unit: string, to_unit: string]: any -> string {
     let conversions = {
         in: {
             mm: {|v| $v * 25.4}
