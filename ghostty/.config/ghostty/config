@@ -1,0 +1,4 @@
+font-size = 16
+font-family = "Monoid Regular"
+theme = "catppuccin-mocha.conf"
+command = "nu"
