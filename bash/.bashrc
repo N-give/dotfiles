@@ -7,13 +7,8 @@ esac
 
 alias v="nvim"
 alias grep="grep --color=auto"
-<<<<<<< Updated upstream
 alias gs="git status"
 alias zj="zellij"
-||||||| Stash base
-=======
-alias zj="zellij"
->>>>>>> Stashed changes
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
