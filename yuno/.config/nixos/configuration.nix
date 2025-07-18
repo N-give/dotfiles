@@ -81,7 +81,7 @@
   };
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
+  services.displayManager.gdm.enable = true;
   # services.xserver.desktopManager.gnome.enable = true;
 
   # Enable hyprland window manager
@@ -145,7 +145,9 @@
 
   fonts = {
     packages = with pkgs; [
-      # nerd-fonts
+      # nerdfonts
+      nerd-fonts.fira-code
+      # nerd-fonts.fira-code-symbols
       powerline-fonts
       monoid
     ];
@@ -166,6 +168,7 @@
     extraGroups = [ "networkmanager" "wheel" "audio" "video" "docker" ];
     packages = with pkgs; [
       acpi
+      alacritty
       audacity
       autorandr
       bat
@@ -175,6 +178,7 @@
       cachix
       certbot
       direnv
+      dunst
       du-dust
       emacs
       eza
@@ -187,6 +191,7 @@
       frei0r
       fzf
       gcc
+      ghostty
       git
       gitAndTools.delta
       google-chrome
@@ -221,7 +226,6 @@
       stow
       spaceFM
       tailscale
-      thefuck
       tmux
       unzip
       vlc

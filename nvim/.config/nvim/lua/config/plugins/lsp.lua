@@ -65,12 +65,9 @@ return {
     config = function()
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
-      require('lspconfig').lua_ls.setup { capabilities = capabilities, }
-      require('lspconfig').rust_analyzer.setup { capabilities = capabilities, }
+      require('lspconfig').denols.setup { capabilities = capabilities, }
       require('lspconfig').elmls.setup { capabilities = capabilities, }
       require('lspconfig').gopls.setup { capabilities = capabilities, }
-      require('lspconfig').denols.setup { capabilities = capabilities, }
-      require('lspconfig').zls.setup { capabilities = capabilities, }
       require('lspconfig').hls.setup {
         capabilities = capabilities,
         filetypes = {
@@ -79,6 +76,10 @@ return {
           'cabal',
         }
       }
+      require('lspconfig').lua_ls.setup { capabilities = capabilities, }
+      require('lspconfig').rust_analyzer.setup { capabilities = capabilities, }
+      require('lspconfig').ts_ls.setup { capabilities = capabilities, }
+      require('lspconfig').zls.setup { capabilities = capabilities, }
 
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
