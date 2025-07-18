@@ -17,45 +17,6 @@ live_config_reload = true
 animation = "EaseOutExpo"
 duration = 0
 
-# [colors]
-# draw_bold_text_with_bright_colors = true
-#
-# [[colors.indexed_colors]]
-# color = "0xECBFBD"
-# index = 16
-#
-# [[colors.indexed_colors]]
-# color = "0x3E4058"
-# index = 17
-#
-# [colors.bright]
-# black = "0x6E6C7C"
-# blue = "0xA4B9EF"
-# cyan = "0xF0AFE1"
-# green = "0xB3E1A3"
-# magenta = "0xC6AAE8"
-# red = "0xE28C8C"
-# white = "0xD7DAE0"
-# yellow = "0xEADDA0"
-#
-# [colors.cursor]
-# cursor = "0xB3E1A3"
-# text = "0x1E1E28"
-#
-# [colors.normal]
-# black = "0x6E6C7C"
-# blue = "0xA4B9EF"
-# cyan = "0xF0AFE1"
-# green = "0xB3E1A3"
-# magenta = "0xC6AAE8"
-# red = "0xE28C8C"
-# white = "0xD7DAE0"
-# yellow = "0xEADDA0"
-#
-# [colors.primary]
-# background = "0x1E1E28"
-# foreground = "0xD7DAE0"
-
 [cursor]
 style = "Block"
 unfocused_hollow = true

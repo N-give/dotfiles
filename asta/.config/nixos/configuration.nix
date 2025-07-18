@@ -196,6 +196,7 @@
       libreoffice
       lsof
       lxappearance
+      ghostty
       gnumake
       mediainfo
       navi
@@ -219,12 +220,12 @@
       spaceFM
       tailscale
       teamspeak_client
-      thefuck
       tmux
       unzip
       usbutils
       vlc
       wally-cli
+      warp-terminal
       wezterm
       xorg.xwininfo
       zathura
