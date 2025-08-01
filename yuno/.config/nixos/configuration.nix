@@ -169,7 +169,6 @@
     packages = with pkgs; [
       acpi
       alacritty
-      audacity
       autorandr
       bat
       bluez
@@ -194,6 +193,7 @@
       ghostty
       git
       gitAndTools.delta
+      gnumake
       google-chrome
       glxinfo
       graphviz
@@ -230,6 +230,7 @@
       unzip
       vlc
       wally-cli
+      warp-terminal
       waybar
       wezterm
       write_stylus
