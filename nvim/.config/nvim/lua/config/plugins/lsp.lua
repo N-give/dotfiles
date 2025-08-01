@@ -1,22 +1,4 @@
---[[
-local on_attach = function(_, bufnr)
-  -- NOTE: Remember that lua is a real programming language, and as such it is possible
-  -- to define small helper and utility functions so you don't have to repeat yourself
-  -- many times.
-  --
-  -- In this case, we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
-
-  nmap('<leader>fa', vim.lsp.buf.format, '[F]ormat [A]ll')
-
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
-end
-]] --
-
-local nmap = function(keys, func, desc)
+local nmap = function(keys, func, bufnr, desc)
   if desc then
     desc = 'LSP: ' .. desc
   end
@@ -53,34 +35,8 @@ return {
         ft = { "go", 'gomod' },
         build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
       },
-      -- {
-      --   'mrcjkb/haskell-tools.nvim',
-      --   requires = {
-      --     'nvim-lua/plenary.nvim',
-      --     'nvim-telescope/telescope.nvim', -- optional
-      --   },
-      --   branch = '2.x.x', -- recommended
-      -- },
     },
     config = function()
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
-
-      require('lspconfig').denols.setup { capabilities = capabilities, }
-      require('lspconfig').elmls.setup { capabilities = capabilities, }
-      require('lspconfig').gopls.setup { capabilities = capabilities, }
-      require('lspconfig').hls.setup {
-        capabilities = capabilities,
-        filetypes = {
-          'haskell',
-          'lhaskell',
-          'cabal',
-        }
-      }
-      require('lspconfig').lua_ls.setup { capabilities = capabilities, }
-      require('lspconfig').rust_analyzer.setup { capabilities = capabilities, }
-      require('lspconfig').ts_ls.setup { capabilities = capabilities, }
-      require('lspconfig').zls.setup { capabilities = capabilities, }
-
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
           local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -99,29 +55,30 @@ return {
           end
 
           if client.supports_method('textDocument/definition') then
-            nmap('<leader>gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+            nmap('<leader>gd', vim.lsp.buf.definition, args.buf, '[G]oto [D]efinition')
           end
           if client.supports_method('textDocument/implementation*') then
-            nmap('<leader>gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+            nmap('<leader>gI', vim.lsp.buf.implementation, args.buf, '[G]oto [I]mplementation')
           end
           if client.supports_method('textDocument/typeDefinition*') then
-            nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+            nmap('<leader>D', vim.lsp.buf.type_definition, args.buf, 'Type [D]efinition')
           end
           if client.supports_method('textDocument/rename') then
-            nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+            nmap('<leader>rn', vim.lsp.buf.rename, args.buf, '[R]e[n]ame')
           end
           if client.supports_method('textDocument/codeAction') then
-            nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+            nmap('<leader>ca', vim.lsp.buf.code_action, args.buf, '[C]ode [A]ction')
           end
           if client.supports_method('textDocument/hover') then
-            nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+            nmap('K', vim.lsp.buf.hover, args.buf, 'Hover Documentation')
           end
           if client.supports_method('textDocument/signatureHelp') then
-            nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Help')
+            nmap('<C-k>', vim.lsp.buf.signature_help, args.buf, 'Signature Help')
           end
-          nmap('<leader>sr', require('telescope.builtin').lsp_references, '[S]earch [R]eferences')
-          nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-          nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+          nmap('<leader>sr', require('telescope.builtin').lsp_references, args.buf, '[S]earch [R]eferences')
+          nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, args.buf, '[D]ocument [S]ymbols')
+          nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, args.buf,
+            '[W]orkspace [S]ymbols')
         end
       })
     end,

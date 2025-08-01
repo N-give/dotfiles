@@ -1,0 +1,11 @@
+vim.lsp.enable({
+  'denols',
+  'elmls',
+  'fennel_ls',
+  'gopls',
+  'hls',
+  'lua_ls',
+  'rust_analyzer',
+  'ts_ls',
+  'zls',
+})

@@ -11,6 +11,7 @@ return {
           'c',
           'go',
           'elm',
+          'fennel',
           'haskell',
           'javascript',
           'lua',

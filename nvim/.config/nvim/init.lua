@@ -1,6 +1,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+require('config.lsp')
 require('config.lazy')
 
 vim.opt.syntax = "on"
@@ -68,78 +69,3 @@ vim.keymap.set('v', 'ma', function()
   local macro = vim.fn.input("macro: ")
   vim.api.nvim_feedkeys(":'<,'>norm! @" .. macro .. vim.api.nvim_replace_termcodes("<cr>", true, true, true), 't', false)
 end, { desc = 'Apply macro to selected lines' })
-
--- require'lspconfig'.lua_ls.setup {
---   on_attach = on_attach,
---   on_init = function(client)
---     local path = client.workspace_folders[1].name
---     if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
---       client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
---         cmd = {
---           "lua-language-server",
---         },
---         Lua = {
---           runtime = {
---             -- Tell the language server which version of Lua you're using
---             -- (most likely LuaJIT in the case of Neovim)
---             version = 'LuaJIT'
---           },
---           diagnostics = {
---             globals = {
---               "vim",
---             },
---           },
---           -- Make the server aware of Neovim runtime files
---           workspace = {
---             checkThirdParty = false,
---             library = {
---               vim.env.VIMRUNTIME
---             }
---           }
---         }
---       })
---
---           client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
---         end
---         return true
---       end
---     }
-
--- require('lspconfig').elmls.setup {
---   on_attach = on_attach,
---   cmd = {
---     "elm-language-server"
---   },
---   filetypes = {
---     "elm"
---   },
---   init_options = {
---     elmAnalyseTrigger = "change"
---   },
--- }
---
--- require('lspconfig').gopls.setup {
---   on_attach = on_attach,
--- }
---
--- require('lspconfig').rust_analyzer.setup {
---   on_attach = on_attach,
---   imports = {
---     granularity = {
---       group = "module",
---     },
---     prefix = "self",
---   },
---   cargo = {
---     buildScripts = {
---       enable = true,
---     },
---   },
---   checkOnSave = {
---     command = "clippy",
---   },
---   procMacro = {
---     enable = false
---   },
--- }
---

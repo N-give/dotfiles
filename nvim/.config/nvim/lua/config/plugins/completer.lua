@@ -4,6 +4,8 @@ return {
     dependencies = 'rafamadriz/friendly-snippets',
 
     version = 'v0.*',
+    branch = "main",
+    build = 'nix run .#build-plugin',
 
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
