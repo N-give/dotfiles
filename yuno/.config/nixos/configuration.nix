@@ -112,8 +112,9 @@
     #media-session.enable = true;
   };
 
-  services.tailscale.enable = true;
-    systemd.services.tailscale-autoconnect = {
+  services.tailscale.enable = false;
+  systemd.services.tailscale-autoconnect = {
+    enable = false;
     description = "Automatic connection to Tailscale";
 
     # make sure tailscale is running before trying to connect to tailscale
@@ -136,7 +137,7 @@
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up -authkey tskey-auth-kRsNEp5CNTRL-e7LsTWm2TeX3XudBywCbdXnNB46FdzFc
+      ${tailscale}/bin/tailscale up -authkey tskey-auth-XXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
     '';
   };
 
