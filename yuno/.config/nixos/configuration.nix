@@ -237,6 +237,7 @@
       write_stylus
       xorg.xwininfo
       zathura
+      zed-editor
       zellij
       zip
       zoxide
