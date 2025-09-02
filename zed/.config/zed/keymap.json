@@ -1,0 +1,85 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "shift shift": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      // "j k": "vim::NormalBefore"
+    }
+  },
+  {
+    "context": "vim_mode == normal && !menu",
+    "bindings": {
+      "shift-y": ["workspace::SendKeystrokes", "y $"]
+    }
+  },
+  {
+    "context": "(Editor && showing_completions)",
+    "bindings": {
+      "ctrl-y": "editor::ConfirmCompletionInsert",
+      "ctrl-n": "editor::NextEditPrediction",
+      "ctrl-p": "editor::PreviousEditPrediction"
+    }
+  },
+  {
+    "context": "Workspace && !Editor",
+    "bindings": {
+      "space s b": "tab_switcher::ToggleAll",
+      "space s f": "file_finder::Toggle",
+      "space s g": "workspace::NewSearch",
+      "space t s": "task::Spawn",
+      "space t t": "workspace::ToggleBottomDock",
+      "space z a": "workspace::ToggleRightDock",
+      "space z e": "zed::OpenKeymapEditor",
+      "space z m": "zed::OpenKeymap",
+      "space z s": "zed::OpenSettings",
+      "space -": "workspace::ToggleLeftDock"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal && !menu",
+    "bindings": {
+      "space c a": "editor::ToggleCodeActions",
+      "space e e": "editor::Hover",
+      "space e n": "editor::GoToDiagnostic",
+      "space e p": "editor::GoToPreviousDiagnostic",
+      "space r n": "editor::Rename",
+      "space s b": "tab_switcher::ToggleAll",
+      "space s f": "file_finder::Toggle",
+      "space s g": "workspace::NewSearch",
+      "space s r": "editor::FindAllReferences",
+      "space t s": "task::Spawn",
+      "space t t": "workspace::ToggleBottomDock",
+      "space z a": "workspace::ToggleRightDock",
+      "space z e": "zed::OpenKeymapEditor",
+      "space z m": "zed::OpenKeymap",
+      "space z s": "zed::OpenSettings",
+      "space -": "workspace::ToggleLeftDock"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "space z e": "zed::OpenKeymapEditor",
+      // "space t t": "workspace::ToggleBottomDock",
+      // "space -": "workspace::ToggleLeftDock",
+      // "space z a": "workspace::ToggleRightDock"
+    }
+  },
+  {
+    "bindings": {
+      "space z m": "zed::OpenKeymap"
+    }
+  }
+]
