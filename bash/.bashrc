@@ -8,6 +8,7 @@ esac
 alias v="nvim"
 alias grep="grep --color=auto"
 alias gs="git status"
+alias gc="git commit"
 alias zj="zellij"
 
 if [ -f ~/.bash_aliases ]; then

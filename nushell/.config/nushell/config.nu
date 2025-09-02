@@ -296,6 +296,12 @@ $env.config = {
             # run if the PWD environment is different since the last repl input
             PWD: [
                 {|before, after| null}
+                {||
+                    if (which direnv | is-empty) {
+                        return
+                    }
+                    direnv export json | from json | default {} | load-env
+                }
                 # {|before, after| 
                 #     let flake_present = (ls | where name == "flake.nix" | length) == 1;
                 #     if $flake_present { nix develop }
