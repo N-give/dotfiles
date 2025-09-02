@@ -202,6 +202,7 @@
       hyprlock
       hyprpaper
       imagemagick
+      jq
       kdePackages.kdenlive
       kind
       lsof
