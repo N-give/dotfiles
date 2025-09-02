@@ -2,6 +2,7 @@ vim.lsp.enable({
   'denols',
   'elmls',
   'fennel_ls',
+  'gleam',
   'gopls',
   'hls',
   'lua_ls',

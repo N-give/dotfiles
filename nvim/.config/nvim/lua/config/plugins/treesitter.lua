@@ -12,6 +12,7 @@ return {
           'go',
           'elm',
           'fennel',
+          'gleam',
           'haskell',
           'javascript',
           'lua',
