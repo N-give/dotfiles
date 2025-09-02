@@ -2,3 +2,5 @@ font-size = 16
 font-family = "Monoid Regular"
 theme = "catppuccin-mocha.conf"
 command = "nu"
+copy-on-select = clipboard
+app-notifications = no-clipboard-copy
