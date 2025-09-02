@@ -2,9 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
-
-{
+{ config, pkgs, sops, ... }:
+let
+  kubeMasterIp = "127.0.0.1";
+  kubeMasterHostname = "api.kube";
+  kubeMasterAPIServerPort = 6443;
+in {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
@@ -51,6 +54,8 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  networking.extraHosts = "${kubeMasterIp} ${kubeMasterHostname}";
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Set your time zone.
@@ -70,6 +75,21 @@
     LC_PAPER = "en_US.UTF-8";
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
+  };
+
+  services.kubernetes = {
+    roles = [ "master" "node" ];
+    masterAddress = kubeMasterHostname;
+    apiserverAddress =
+      "https://${kubeMasterHostname}:${toString kubeMasterAPIServerPort}";
+    easyCerts = true;
+    apiserver = {
+      securePort = kubeMasterAPIServerPort;
+      advertiseAddress = kubeMasterIp;
+    };
+
+    addons.dns.enable = true;
+    kubelet.extraOpts = "--fail-swap-on=false";
   };
 
   services.tailscale.enable = true;
@@ -153,27 +173,28 @@
 
   hardware.keyboard.zsa.enable = true;
 
+  nixpkgs.config.permittedInsecurePackages = [
+    "qtwebengine-5.15.19"
+  ];
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.nate = {
     isNormalUser = true;
     description = "nate";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "kubernetes" ];
     packages = with pkgs; [
       acpi
       alacritty
       android-file-transfer
       audacity
-      autorandr
-      bambu-studio
+      # bambu-studio
       bat
       bottom
-      brave
       cachix
-      darktable
+      # darktable
       dbeaver-bin
       direnv
       du-dust
-      emacs
       eza
       exercism
       fd
@@ -183,17 +204,14 @@
       freecad
       fzf
       gcc
-      gimp
       git
       gitAndTools.delta
       google-chrome
-      heroic
       imagemagick
       kdePackages.kdenlive
       kind
       krita
       lua-language-server
-      libreoffice
       lsof
       lxappearance
       ghostty
@@ -215,6 +233,7 @@
       sd
       SDL
       skim
+      pkgs.sops
       starship
       stow
       spaceFM
@@ -225,10 +244,11 @@
       usbutils
       vlc
       wally-cli
-      warp-terminal
+      # warp-terminal
       wezterm
       xorg.xwininfo
       zathura
+      zed-editor
       zellij
       zip
       zoxide
@@ -270,10 +290,15 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    monoid
+    age
+    cloudflared
     cups-browsed
+    kompose
+    kubectl
+    kubernetes
+    monoid
+    vim
+    wget
     # (steam.override { withJava = true; })
   ];
 
@@ -288,7 +313,41 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    ports = [ 22 ];
+    settings = {
+      PasswordAuthentication = true;
+      AllowUsers = [ "nate" ];
+      PermitRootLogin = "no";
+    };
+  };
+
+  sops = {
+    age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    defaultSopsFile = ./secrets/secrets.yaml;
+    secrets = {
+      api-key = {};
+      "cloudflared-creds/cert" = {};
+      "cloudflared-creds/asta-dev-01" = {};
+    };
+  };
+  services.cloudflared = {
+    enable = true;
+    certificateFile = "${config.sops.secrets."cloudflared-creds/cert".path}";
+    tunnels = {
+      "51fbc84f-8ac4-4b5c-a3d8-e07cf1010acc" = {
+        credentialsFile =
+          "${config.sops.secrets."cloudflared-creds/asta-dev-01".path}";
+        ingress = {
+          "*.ngivens.com" = {
+            service = "http://localhost:8000";
+          };
+        };
+        default = "http_status:404";
+      };
+    };
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
