@@ -33,21 +33,6 @@
     }
   },
   {
-    "context": "Workspace && !Editor",
-    "bindings": {
-      "space s b": "tab_switcher::ToggleAll",
-      "space s f": "file_finder::Toggle",
-      "space s g": "workspace::NewSearch",
-      "space t s": "task::Spawn",
-      "space t t": "workspace::ToggleBottomDock",
-      "space z a": "workspace::ToggleRightDock",
-      "space z e": "zed::OpenKeymapEditor",
-      "space z m": "zed::OpenKeymap",
-      "space z s": "zed::OpenSettings",
-      "space -": "workspace::ToggleLeftDock"
-    }
-  },
-  {
     "context": "Editor && vim_mode == normal && !menu",
     "bindings": {
       "space c a": "editor::ToggleCodeActions",
@@ -65,6 +50,26 @@
       "space z e": "zed::OpenKeymapEditor",
       "space z m": "zed::OpenKeymap",
       "space z s": "zed::OpenSettings",
+      "space -": "workspace::ToggleLeftDock"
+    }
+  },
+  {
+    "context": "Workspace && !Editor",
+    "bindings": {
+      "space s b": "tab_switcher::ToggleAll",
+      "space s f": "file_finder::Toggle",
+      "space s g": "workspace::NewSearch",
+      "space t s": "task::Spawn",
+      "space t t": "workspace::ToggleBottomDock",
+      "space z a": "workspace::ToggleRightDock",
+      "space z e": "zed::OpenKeymapEditor",
+      "space z m": "zed::OpenKeymap",
+      "space z s": "zed::OpenSettings"
+    }
+  },
+  {
+    "context": "Workspace && !Editor && !Terminal",
+    "bindings": {
       "space -": "workspace::ToggleLeftDock"
     }
   },
