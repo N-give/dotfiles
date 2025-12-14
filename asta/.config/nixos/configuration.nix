@@ -117,7 +117,7 @@ in {
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up -authkey tskey-auth-kNxhwV3CNTRL-pwXNws34BZWRPeTGShDfYWn61UggtAzi
+      ${tailscale}/bin/tailscale up -authkey "${config.sops.secrets."tailscale/asta".path}";
     '';
   };
 
@@ -144,7 +144,7 @@ in {
   # Enable CUPS to print documents.
   services.printing = {
     enable = true;
-    drivers = [ pkgs.brlaser ];
+    # drivers = [ pkgs.brlaser ];
   };
   services.avahi = {
     enable = true;
@@ -173,9 +173,9 @@ in {
 
   hardware.keyboard.zsa.enable = true;
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "qtwebengine-5.15.19"
-  ];
+  # nixpkgs.config.permittedInsecurePackages = [
+  #   "qtwebengine-5.15.19"
+  # ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.nate = {
@@ -194,7 +194,7 @@ in {
       # darktable
       dbeaver-bin
       direnv
-      du-dust
+      dust
       eza
       exercism
       fd
@@ -205,10 +205,11 @@ in {
       fzf
       gcc
       git
-      gitAndTools.delta
+      delta
       google-chrome
       imagemagick
-      kdePackages.kdenlive
+      # kdePackages.kdenlive
+      keymapp
       kind
       krita
       lua-language-server
@@ -238,7 +239,7 @@ in {
       stow
       spaceFM
       tailscale
-      teamspeak_client
+      # teamspeak_client
       tmux
       unzip
       usbutils
@@ -317,7 +318,7 @@ in {
     enable = true;
     ports = [ 22 ];
     settings = {
-      PasswordAuthentication = true;
+      PasswordAuthentication = false;
       AllowUsers = [ "nate" ];
       PermitRootLogin = "no";
     };
@@ -330,6 +331,7 @@ in {
       api-key = {};
       "cloudflared-creds/cert" = {};
       "cloudflared-creds/asta-dev-01" = {};
+      "tailscale/asta" = {};
     };
   };
   services.cloudflared = {
@@ -340,9 +342,12 @@ in {
         credentialsFile =
           "${config.sops.secrets."cloudflared-creds/asta-dev-01".path}";
         ingress = {
-          "*.ngivens.com" = {
-            service = "http://localhost:8000";
+          "miles.ngivens.com" = {
+            service = "http://127.0.0.1:8080";
           };
+          # "*.ngivens.com" = {
+          #   service = "http://localhost:8000";
+          # };
         };
         default = "http_status:404";
       };
@@ -357,7 +362,7 @@ in {
     enable = true;
     trustedInterfaces = [ "tailscale0" ];
     allowedUDPPorts = [ config.services.tailscale.port ];
-    allowedTCPPorts = [ 22 ];
+    allowedTCPPorts = [ 22 3000 7000 8000 ];
   };
 
   # This value determines the NixOS release from which the default
