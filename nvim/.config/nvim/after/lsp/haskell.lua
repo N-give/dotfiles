@@ -1,5 +1,3 @@
-local ht = require('haskell-tools')
-
 local bufnr = vim.api.nvim_get_current_buf()
 local nmap = function(keys, func, desc)
   if desc then
@@ -12,17 +10,6 @@ end
 -- haskell-language-server relies heavily on codeLenses,
 -- so auto-refresh (see advanced configuration) is enabled by default
 nmap('<space>cl', vim.lsp.codelens.run, '[C]ode [L]ens')
--- Hoogle search for the type signature of the definition under the cursor
-nmap('<space>hs', ht.hoogle.hoogle_signature, '[H]oogle [S]earch')
--- Evaluate all code snippets
-nmap('<space>ea', ht.lsp.buf_eval_all, '[E]valuate [A]ll code snippets')
--- Toggle a GHCi repl for the current package
-nmap('<leader>rr', ht.repl.toggle, 'toggle [R]epl for current package')
--- Toggle a GHCi repl for the current buffer
-nmap('<leader>rf', function()
-  ht.repl.toggle(vim.api.nvim_buf_get_name(0))
-end, 'toggle [R]epl for current buffer')
-nmap('<leader>rq', ht.repl.quit, '[R]epl [Q]uit')
 
 nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
 nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
