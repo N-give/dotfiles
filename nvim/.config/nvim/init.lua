@@ -1,7 +1,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.opt.syntax = "on"
+vim.opt.syntax = 'on'
 vim.opt.showcmd = true
 vim.opt.laststatus = 2
 vim.opt.backspace = "indent,eol,start"
