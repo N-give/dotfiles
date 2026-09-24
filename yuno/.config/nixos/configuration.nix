@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports =
@@ -112,7 +112,7 @@
     #media-session.enable = true;
   };
 
-  services.tailscale.enable = false;
+  services.tailscale.enable = true;
   systemd.services.tailscale-autoconnect = {
     enable = false;
     description = "Automatic connection to Tailscale";
@@ -137,7 +137,7 @@
       fi
 
       # otherwise authenticate with tailscale
-      ${tailscale}/bin/tailscale up -authkey tskey-auth-XXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      ${tailscale}/bin/tailscale up -authkey tskey-auth-kXZbQmb2Wf11CNTRL-sZ8VyX5vL8Hn5R2ehhF39HF7fqnEbDYZ
     '';
   };
 
@@ -177,9 +177,10 @@
       brightnessctl
       cachix
       certbot
+      cloudflared
       direnv
       dunst
-      du-dust
+      dust
       emacs
       eza
       exercism
@@ -193,10 +194,9 @@
       gcc
       ghostty
       git
-      gitAndTools.delta
+      delta
       gnumake
       google-chrome
-      glxinfo
       graphviz
       hicolor-icon-theme
       hypridle
@@ -207,8 +207,10 @@
       kdePackages.kdenlive
       kind
       lsof
+      luaPackages.tree-sitter-cli
       lxappearance
       mediainfo
+      mesa-demos
       mkcert
       navi
       neovim
@@ -226,7 +228,7 @@
       skim
       starship
       stow
-      spaceFM
+      styluslabs-write-bin
       tailscale
       tmux
       unzip
@@ -235,11 +237,12 @@
       warp-terminal
       waybar
       wezterm
-      write_stylus
-      xorg.xwininfo
+      xwininfo
       zathura
       zed-editor
       zellij
+      # inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
+      # zen-browser
       zip
       zoxide
       zsa-udev-rules
